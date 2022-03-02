@@ -44,7 +44,7 @@ public class AppSettings
 ```
 
 4 - Instâncie, crie o Exchange, crie as Queues e defina a injeção de dependência.
-* Publisher e Consumer são definidor como Singleton, assim como o RabbitMQLib *
+* Publisher e Consumer são definidor como Singleton, assim como o RabbitMQLib
 
 ```
 // Instance
