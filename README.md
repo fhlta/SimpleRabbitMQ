@@ -1,7 +1,7 @@
-## Introduction 
+# Introduction 
 Biblioteca RabbitMQ
 
-## Getting Started
+# Getting Started
 1 - Defina no AppSettings as configurações
 
 ```
@@ -80,5 +80,5 @@ var result = _consumer.SubscribeConsumer(async (order) =>
  var response = await _publisherMQ.PublishAsync(orderDTO);
 ```
 
-## Contribute
-[GitHub Pages](https://github.com/fenixrhiulta/)
+# Contribute
+Fenix Rhiulta @fenixrhiulta

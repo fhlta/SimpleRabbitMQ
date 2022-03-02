@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleRabbitMQ.Model
+namespace SimpleRabbitMQCore.Model
 {
     public class SimpleRabbitMQSettings
     {

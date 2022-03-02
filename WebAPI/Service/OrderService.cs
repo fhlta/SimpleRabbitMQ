@@ -1,6 +1,6 @@
-﻿using Domain.Model;
+﻿using SimpleRabbitMQCore;
+using Domain.Model;
 using Serilog;
-using SimpleRabbitMQ;
 using System;
 using System.Threading.Tasks;
 
@@ -23,6 +23,7 @@ namespace WebAPI.Services
             {
                 for(int i = 0; i < 10; i++)
                 {
+                    // Sending message to exchange
                     var response = await _publisherMQ.PublishAsync(orderDTO);
                     if (response == false) { Console.WriteLine("Failed to publish message"); }
                 }

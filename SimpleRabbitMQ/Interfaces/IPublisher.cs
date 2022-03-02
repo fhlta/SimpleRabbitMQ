@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace SimpleRabbitMQ
+namespace SimpleRabbitMQCore
 {
     public interface IPublisher<T>
     {

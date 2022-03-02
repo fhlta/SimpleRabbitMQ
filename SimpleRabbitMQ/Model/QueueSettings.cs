@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SimpleRabbitMQ.Model
+namespace SimpleRabbitMQCore.Model
 {
     public class QueueSettings
     {

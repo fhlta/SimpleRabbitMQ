@@ -2,13 +2,13 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Serilog;
-using SimpleRabbitMQ.Model;
+using SimpleRabbitMQCore.Model;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SimpleRabbitMQ
+namespace SimpleRabbitMQCore
 {
     public class Consumer<T> : IConsumer<T>
     {
@@ -17,11 +17,11 @@ namespace SimpleRabbitMQ
         private readonly IConnection _connection;
         private string _consumerTag;
 
-        public Consumer(ILogger logger, ISimpleRabbitMQService simpleRabbitMQService, QueueSettings queue)
+        public Consumer(ILogger logger, ISimpleRabbitMQ SimpleRabbitMQ, QueueSettings queue)
         {
             _queue = queue;
             _logger = logger;
-            _connection = simpleRabbitMQService.GetConnection();
+            _connection = SimpleRabbitMQ.GetConnection();
         }
 
         public bool SubscribeConsumer(Action<T> procedure, bool autoAck = true)
@@ -33,22 +33,22 @@ namespace SimpleRabbitMQ
 
                 consumer.Received += async (model, ea) =>
                 {
-                    //await Task.Run(() =>
-                    //{
-                      
-                    //});
-
-                    try
+                    await Task.Run(() =>
                     {
-                        var body = ea.Body.ToArray();
-                        var message = Encoding.UTF8.GetString(body);
+                        try
+                        {
+                            _logger.Information($"[RabbitMQ.Consumer] Reading message...");
 
-                        procedure.Invoke(JsonConvert.DeserializeObject<T>(message));
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Error(ex, $"Error when attemp to read message from queue");
-                    }
+                            var body = ea.Body.ToArray();
+                            var message = Encoding.UTF8.GetString(body);
+
+                            procedure.Invoke(JsonConvert.DeserializeObject<T>(message));
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.Error(ex, $"Error when attemp to read message from queue");
+                        }
+                    });
                 };
 
                 _consumerTag = channel.BasicConsume(queue: _queue.QueueName,

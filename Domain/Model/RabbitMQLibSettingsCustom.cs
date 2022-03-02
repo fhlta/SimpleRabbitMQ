@@ -1,4 +1,4 @@
-﻿using SimpleRabbitMQ.Model;
+﻿using SimpleRabbitMQCore.Model;
 
 namespace Domain.Model
 {

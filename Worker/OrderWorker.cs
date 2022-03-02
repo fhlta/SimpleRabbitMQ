@@ -1,9 +1,9 @@
-﻿using Domain.Model;
+﻿using SimpleRabbitMQCore;
+using Domain.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Serilog;
-using SimpleRabbitMQ;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -30,14 +30,14 @@ namespace Worker
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
+            // Subscribe consumer to queue
             var result = _consumer.SubscribeConsumer(async (order) =>
             {
-                Console.WriteLine("# START");
+                Console.WriteLine("@ START PROCESS");
 
                 await Task.Delay(5000);
 
-                Console.WriteLine("@ END");
-
+                Console.WriteLine("@ END PROCESS");
             });
 
             if (result) _logger.Information("Consumer subscribed");

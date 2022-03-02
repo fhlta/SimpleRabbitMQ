@@ -1,3 +1,4 @@
+using SimpleRabbitMQCore;
 using Domain.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using SimpleRabbitMQ;
 using WebAPI.Services;
 using Worker;
 
@@ -40,12 +40,19 @@ namespace WebAPI
             services.AddSingleton(logger);
             services.AddScoped<IOrderService, OrderService>();
 
-            var simpleRabbitMQ = new SimpleRabbitMQService(appSettings.SimpleRabbitMQSettings, logger);
-            services.AddSingleton<ISimpleRabbitMQService, SimpleRabbitMQService>(sp => simpleRabbitMQ);
-            services.AddSingleton<IPublisher<OrderCreateRequest>, Publisher<OrderCreateRequest>>(
-                sp => new Publisher<OrderCreateRequest>(logger, simpleRabbitMQ, appSettings.SimpleRabbitMQSettings.OrderCreateQueue));
-            services.AddSingleton<IConsumer<OrderCreateRequest>, Consumer<OrderCreateRequest>>(
-                sp => new Consumer<OrderCreateRequest>(logger, simpleRabbitMQ, appSettings.SimpleRabbitMQSettings.OrderCreateQueue));
+            // Instance
+            var SimpleRabbitMQ = new SimpleRabbitMQ(appSettings.SimpleRabbitMQSettings, logger);
+
+            // Definitions
+            SimpleRabbitMQ.CreateExchange(appSettings.SimpleRabbitMQSettings.OrderExchange);
+            SimpleRabbitMQ.CreateQueue(appSettings.SimpleRabbitMQSettings.OrderCreateQueue);
+
+            // Dependency Injection
+            services.AddSingleton<ISimpleRabbitMQ, SimpleRabbitMQ>(sp => SimpleRabbitMQ);
+
+            // Each DTO must have a unique Publisher and Consumer for its own message
+            services.AddSingleton<IPublisher<OrderCreateRequest>, Publisher<OrderCreateRequest>>(sp => new Publisher<OrderCreateRequest>(logger, SimpleRabbitMQ, appSettings.SimpleRabbitMQSettings.OrderCreateQueue));
+            services.AddSingleton<IConsumer<OrderCreateRequest>, Consumer<OrderCreateRequest>>(sp => new Consumer<OrderCreateRequest>(logger, SimpleRabbitMQ, appSettings.SimpleRabbitMQSettings.OrderCreateQueue));
 
             services.AddHostedService<OrderWorker>();
         }
@@ -60,7 +67,7 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

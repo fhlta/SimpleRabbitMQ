@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
 using Serilog;
-using SimpleRabbitMQ.Model;
+using SimpleRabbitMQCore.Model;
 using System;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleRabbitMQ
+namespace SimpleRabbitMQCore
 {
     public class Publisher<T> : IPublisher<T>
     {
@@ -16,14 +16,12 @@ namespace SimpleRabbitMQ
         private readonly ILogger _logger;
         public readonly Guid _id = new Guid();
 
-        public Publisher(ILogger logger, ISimpleRabbitMQService simpleRabbitMQService, QueueSettings queue)
+        public Publisher(ILogger logger, ISimpleRabbitMQ SimpleRabbitMQ, QueueSettings queue)
         {
-            _channel = simpleRabbitMQService.GetConnection().CreateModel();
+            _channel = SimpleRabbitMQ.GetConnection().CreateModel();
             _exchange = queue.ExchangeName;
             _routingKey = queue.RoutingKey;
             _logger = logger;
-
-            simpleRabbitMQService.CreateQueue(queue);
         }
 
         public async Task<bool> PublishAsync(T request, IBasicProperties properties = null)
@@ -48,7 +46,7 @@ namespace SimpleRabbitMQ
 
                     _channel.WaitForConfirmsOrDie();
 
-                    _logger.Information("Published message");
+                    _logger.Information("[RabbitMQ.Publisher] Published message");
 
                     return true;
                 }
