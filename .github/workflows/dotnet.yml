@@ -17,9 +17,7 @@ jobs:
       run: git fetch --prune --unshallow
     
     - name: 'Install GitVersion'
-      uses: gittools/actions/gitversion/setup@v0.9.7
-      with:
-        versionSpec: '5.3.x'
+      uses: GitTools/actions@v0.9.11
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         
