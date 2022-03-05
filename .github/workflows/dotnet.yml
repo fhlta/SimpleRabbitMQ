@@ -21,9 +21,9 @@ jobs:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
           versionSpec: '5.1.x'
-    - name: Use GitVersion
+    - name: GitTools
+      uses: GitTools/actions@v0.9.11
       id: gitversion # step id used as reference for output values
-      uses: gittools/actions/gitversion/execute@v0.9
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     - run: |
