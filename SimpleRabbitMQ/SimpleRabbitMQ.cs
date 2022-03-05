@@ -23,10 +23,7 @@ namespace SimpleRabbitMQCore
         private IModel _channel;
         private ConnectionFactory _connectionFactory;
 
-        public SimpleRabbitMQ(
-            SimpleRabbitMQSettings rabbitMQSettings,
-            ILogger logger
-            )
+        public SimpleRabbitMQ(SimpleRabbitMQSettings rabbitMQSettings, ILogger logger)
         {
             _logger = logger;
             _rabbitMQSettings = rabbitMQSettings;
