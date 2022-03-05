@@ -11,7 +11,25 @@ SimpleRabbitMQ é uma [NuGet library](https://www.nuget.org/packages/SimpleRabbi
 
 Facilitar a comunicação com o RabbitMQ em APIs. Com ela é possível definir as configurações no AppSettings, como URI, Exchanges e Queues. Publique as mensagens utilizando a abstração "IPublisher" e consuma com o "IConsumer", definidos para cada DTO e com suas respectivas funcionalidades. 
 
-### Publisher
+### ISimpleRabbitMQ
+
+```csharp
+
+public SimpleRabbitMQ(SimpleRabbitMQSettings rabbitMQSettings, ILogger logger)
+
+```
+
+Exemplo de uso:
+
+```csharp
+
+var SimpleRabbitMQ = new SimpleRabbitMQ(appSettings.SimpleRabbitMQSettings, logger);
+SimpleRabbitMQ.CreateExchange(appSettings.SimpleRabbitMQSettings.OrderExchange);
+SimpleRabbitMQ.CreateQueue(appSettings.SimpleRabbitMQSettings.OrderCreateQueue);
+
+```
+
+### IPublisher
 
 
 ```csharp
@@ -50,7 +68,7 @@ public async Task<OrderCreateResponse> PostOrderServiceAsync(OrderCreateRequest 
 
 ```
 
-### Consumer
+### IConsumer
 
 ```csharp
 
