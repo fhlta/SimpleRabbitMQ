@@ -24,6 +24,8 @@ jobs:
     - name: Use GitVersion
       id: gitversion # step id used as reference for output values
       uses: gittools/actions/gitversion/execute@v0.9
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     - run: |
         echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
         echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
