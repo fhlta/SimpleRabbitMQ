@@ -171,4 +171,4 @@ Next Features
 - Stress Test
 
 # Contribute
-[GitHub Pages](https://github.com/fenixrhiulta/).
+[Fenix Rhiulta](https://github.com/fenixrhiulta/).
