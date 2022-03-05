@@ -15,29 +15,38 @@ jobs:
     - uses: actions/checkout@v2
     - name: Fetch all history for all tags and branches
       run: git fetch --prune --unshallow
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9
+    
+    - name: 'Install GitVersion'
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.3.x'
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      with:
-          versionSpec: '5.1.x'
+        
     - name: GitTools
-      uses: GitTools/actions@v0.9.11
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+          additionalArguments: '/diag'
       id: gitversion # step id used as reference for output values
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     - run: |
         echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
         echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
+        
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        
     - name: Build with dotnet
       run: dotnet build --configuration Release
+      
     - name: Test with dotnet
       run: dotnet test
+      
     - name: Pack with dotnet
       run: dotnet pack src/Raptor.Core.AspNetCore/Raptor.Core.AspNetCore.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }} 
+    
     - name: Push with dotnet
       run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
