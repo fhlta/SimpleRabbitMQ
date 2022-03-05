@@ -33,7 +33,7 @@ namespace Worker
             // Subscribe consumer to queue
             var result = _consumer.SubscribeConsumer(async (order) =>
             {
-                Console.WriteLine("@ START PROCESS");
+                Console.WriteLine("# MESSAGE READED - STARTING PROCESS");
 
                 await Task.Delay(5000);
 

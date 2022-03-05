@@ -14,14 +14,23 @@ namespace SimpleRabbitMQCore
         private readonly string _exchange;
         private readonly string _routingKey;
         private readonly ILogger _logger;
+        private readonly ISimpleRabbitMQ _simpleRabbitMQ;
+
         public readonly Guid _id = new Guid();
 
-        public Publisher(ILogger logger, ISimpleRabbitMQ SimpleRabbitMQ, QueueSettings queue)
+        public Publisher(ILogger logger, ISimpleRabbitMQ simpleRabbitMQ, QueueSettings queue)
         {
-            _channel = SimpleRabbitMQ.GetConnection().CreateModel();
+           
             _exchange = queue.ExchangeName;
             _routingKey = queue.RoutingKey;
             _logger = logger;
+
+            _simpleRabbitMQ = simpleRabbitMQ;
+
+            if (simpleRabbitMQ.IsConnected)
+            {
+                _channel = simpleRabbitMQ.GetConnection().CreateModel();
+            };
         }
 
         public async Task<bool> PublishAsync(T request, IBasicProperties properties = null)
@@ -30,6 +39,12 @@ namespace SimpleRabbitMQCore
             {
                 try
                 {
+                    if (_simpleRabbitMQ.IsConnected == false)
+                    {
+                        _logger.Error($"[RabbitMQ.Publisher] RabbitMQ connection problem. Connection not found.");
+                        return false;
+                    }
+
                     string requestSerialized = JsonConvert.SerializeObject(request, Newtonsoft.Json.Formatting.Indented);
 
                     var body = Encoding.UTF8.GetBytes(requestSerialized);

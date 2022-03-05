@@ -43,9 +43,12 @@ namespace WebAPI
             // Instance
             var SimpleRabbitMQ = new SimpleRabbitMQ(appSettings.SimpleRabbitMQSettings, logger);
 
-            // Definitions
-            SimpleRabbitMQ.CreateExchange(appSettings.SimpleRabbitMQSettings.OrderExchange);
-            SimpleRabbitMQ.CreateQueue(appSettings.SimpleRabbitMQSettings.OrderCreateQueue);
+            if (SimpleRabbitMQ.IsConnected)
+            {
+                // Definitions
+                SimpleRabbitMQ.CreateExchange(appSettings.SimpleRabbitMQSettings.OrderExchange);
+                SimpleRabbitMQ.CreateQueue(appSettings.SimpleRabbitMQSettings.OrderCreateQueue);
+            }
 
             // Dependency Injection
             services.AddSingleton<ISimpleRabbitMQ, SimpleRabbitMQ>(sp => SimpleRabbitMQ);

@@ -16,5 +16,7 @@ namespace SimpleRabbitMQCore
         void CreateQueue(string queueName, string exchangeName, string routingKey);
         IConnection GetConnection();
         Task Subscribe(string queueName, Action<string> procedure);
+        bool IsConnected { get;}
+
     }
 }

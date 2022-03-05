@@ -14,21 +14,26 @@ namespace SimpleRabbitMQCore
     {
         private readonly QueueSettings _queue;
         private readonly ILogger _logger;
-        private readonly IConnection _connection;
-        private string _consumerTag;
+        private readonly ISimpleRabbitMQ _simpleRabbitMQ;
 
-        public Consumer(ILogger logger, ISimpleRabbitMQ SimpleRabbitMQ, QueueSettings queue)
+        public Consumer(ILogger logger, ISimpleRabbitMQ simpleRabbitMQ, QueueSettings queue)
         {
             _queue = queue;
             _logger = logger;
-            _connection = SimpleRabbitMQ.GetConnection();
+            _simpleRabbitMQ = simpleRabbitMQ;
         }
 
         public bool SubscribeConsumer(Action<T> procedure, bool autoAck = true)
         {
             try
             {
-                IModel channel = _connection.CreateModel();
+                if (_simpleRabbitMQ.IsConnected == false)
+                {
+                    _logger.Error($"[RabbitMQ.Consumer] RabbitMQ connection problem. Connection not found.");
+                    return false;
+                }
+
+                IModel channel = _simpleRabbitMQ.GetConnection().CreateModel();
                 var consumer = new EventingBasicConsumer(channel);
 
                 consumer.Received += async (model, ea) =>
@@ -51,11 +56,11 @@ namespace SimpleRabbitMQCore
                     });
                 };
 
-                _consumerTag = channel.BasicConsume(queue: _queue.QueueName,
+                string consumerTag = channel.BasicConsume(queue: _queue.QueueName,
                                        autoAck: autoAck,
                                        consumer: consumer);
 
-                if (string.IsNullOrEmpty(_consumerTag)) return false;
+                if (string.IsNullOrEmpty(consumerTag)) return false;
 
                 return true;
             }

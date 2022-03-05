@@ -17,11 +17,10 @@ namespace SimpleRabbitMQCore
     {
         private readonly SimpleRabbitMQSettings _rabbitMQSettings;
         private readonly ILogger _logger;
-
-        public bool IsConnected = false;
         private IConnection _conn;
         private IModel _channel;
         private ConnectionFactory _connectionFactory;
+        public bool IsConnected { get; private set; }
 
         public SimpleRabbitMQ(SimpleRabbitMQSettings rabbitMQSettings, ILogger logger)
         {
@@ -43,10 +42,12 @@ namespace SimpleRabbitMQCore
                 _connectionFactory = new ConnectionFactory() { Uri = new Uri(connectionString) };
                 _conn = _connectionFactory.CreateConnection();
                 _channel = _conn.CreateModel();
+                IsConnected = true;
             }
             catch (Exception e)
             {
-                _logger.Error(e, "Cannot connect RabbitMQ server");
+                _logger.Error(e, "Can't connect to the RabbitMQ server");
+                IsConnected = false;
             }
         }
 
@@ -54,13 +55,15 @@ namespace SimpleRabbitMQCore
         {
             try
             {
-                if (_conn == null) throw new Exception("Connection not found");
+                if (_conn == null) throw new Exception("[SimpleRabbitMQ] No connection found");
                 return _conn;
             }
             catch (Exception e)
             {
-                throw;
+                _logger.Error(e, "");
             }
+
+            return null;
         }
 
         #endregion Connection
