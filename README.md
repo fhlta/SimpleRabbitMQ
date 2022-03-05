@@ -5,7 +5,7 @@ Biblioteca criada para simplificar a interação com o RabbitMQ.
 
 # Features
 
-SimpleRabbitMQ é uma biblioteca para facilitar a comunicação com o RabbitMQ em APIs. Com ela é possível definir as configurações no AppSettings, como URI, Exchanges e Queues. Utilizando injeção de dependência, publique as mensagens utilizando o "Publisher" e consuma com o "Consumer", definidos para cada DTO e com suas respectivas funcionalidades. 
+SimpleRabbitMQ é uma biblioteca para facilitar a comunicação com o RabbitMQ em APIs. Com ela é possível definir as configurações no AppSettings, como URI, Exchanges e Queues. Publique as mensagens utilizando a abstração "IPublisher" e consuma com o "IConsumer", definidos para cada DTO e com suas respectivas funcionalidades. 
 
 ### Publisher
 
@@ -171,4 +171,4 @@ Next Features
 - Stress Test
 
 # Contribute
-[Fenix Rhiulta](https://github.com/fenixrhiulta/).
+[Fenix Rhiulta](https://github.com/fenixrhiulta/)
