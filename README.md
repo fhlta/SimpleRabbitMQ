@@ -97,10 +97,6 @@ public override Task StartAsync(CancellationToken cancellationToken)
 }
 ```
 
-## Performance
-
-Soon...
-
 ## Getting Started
 
 1 - Defina no seu appsettings.json
@@ -183,14 +179,16 @@ var result = _consumer.SubscribeConsumer(async (order) =>
 var response = await _publisherMQ.PublishAsync(orderDTO);
 ```
 
+## Performance
 
-Next Features
---------
+Soon...
+
+## Next Features
 
 - QOS
 - ACK
 - Performance test
 - Stress Test
 
-# Contribute
+## Contribute
 [Fenix Rhiulta](https://github.com/fenixrhiulta/)
