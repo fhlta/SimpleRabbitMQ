@@ -1,22 +1,25 @@
+mode: Mainline
+commit-message-incrementing: MergeMessageOnly
 next-version: 1.0
-assembly-versioning-scheme: MajorMinorPatch
-assembly-file-versioning-scheme: MajorMinorPatch
-assembly-informational-format: '{InformationalVersion}'
-mode: ContinuousDelivery
-increment: Inherit
-continuous-delivery-fallback-tag: ci
-tag-prefix: '[vV]'
-major-version-bump-message: '\+semver:\s?(breaking|major)'
-minor-version-bump-message: '\+semver:\s?(feature|minor)'
-patch-version-bump-message: '\+semver:\s?(fix|patch)'
-no-bump-message: '\+semver:\s?(none|skip)'
-legacy-semver-padding: 4
-build-metadata-padding: 4
-commits-since-version-source-padding: 4
-tag-pre-release-weight: 60000
-commit-message-incrementing: Enabled
-ignore:
-  sha: []
-  commits-before: yyyy-MM-ddTHH:mm:ss
-merge-message-formats: {}
-update-build-number: true
+assembly-versioning-format: '{Major}.{Minor}.{Patch}.{env:BUILDCOUNT ?? 0}'
+assembly-informational-format: '{NuGetVersionV2}+Build.{env:BUILDCOUNT ?? 0}.Date.{CommitDate}.Branch.{env:SAFEBRANCHNAME ?? unknown}.Sha.{Sha}'
+commit-date-format: yyyyMMddTHHmmss
+
+branches:
+  master:
+    increment: Patch
+    is-release-branch: true
+  pull-request:
+    tag: rc
+    increment: Patch
+  feature:
+    regex: .*/
+    tag: useBranchName
+    increment: Patch
+    source-branches: ['master', 'feature']
+    track-merge-target: true
+  release:
+    tag: ''
+    regex: releases?[/-]\d+\.\d+\.\d+
+    increment: Patch
+    is-release-branch: true
