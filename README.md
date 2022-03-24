@@ -1,4 +1,4 @@
-SimpleRabbitMQ - simplifique interações com RabbitMQ
+SimpleRabbitMQ - Simplifique o RabbitMQ
 ========================================
 
 Biblioteca criada para simplificar a interação com o RabbitMQ.
