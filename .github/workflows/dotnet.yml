@@ -2,49 +2,52 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-  
     runs-on: ubuntu-latest
-      
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Fetch all history for all tags and branches
-      run: git fetch --prune --unshallow
-    
-    - name: 'Install GitVersion'
-      uses: gittools/actions/gitversion/setup@v0.9.3
-      with:
-        versionSpec: '5.3.x'
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        
-    - name: GitTools
-      uses: gittools/actions/gitversion/execute@v0.9.3
-      id: gitversion # step id used as reference for output values
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-    - run: |
-        echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
-        echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
-      
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.101'
-        
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-      
-    - name: Test with dotnet
-      run: dotnet test
-      
-    - name: Pack with dotnet
-      run: dotnet pack SimpleRabbitMQ/SimpleRabbitMQ.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
-    
-    - name: Push with dotnet
-      run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      - uses: actions/checkout@v2
+      - name: Fetch all history for all tags and branches
+        run: git fetch --prune --unshallow
+
+      - name: "Install GitVersion"
+        uses: gittools/actions/gitversion/setup@v0.9.3
+        with:
+          versionSpec: "5.3.x"
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+
+      - name: GitTools
+        uses: gittools/actions/gitversion/execute@v0.9.3
+        id: gitversion # step id used as reference for output values
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+      - run: |
+          echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+          echo "NuGetPreReleaseTagV2: ${{ steps.gitversion.outputs.CommitsSinceVersionSourcePadded }}"
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "5.0.101"
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Test with dotnet
+        run: dotnet test
+
+      # - name: Pack with dotnet
+      #   run: dotnet pack SimpleRabbitMQ/SimpleRabbitMQ.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
+
+      - name: Pack with nuget.exe
+      - uses: nuget/setup-nuget@v1
+        run: nuget pack -OutputDirectory nuget-packages -Properties Configuration=Release -Version ${{ steps.gitversion.outputs.nuGetVersionV2 }}
+
+      - name: Push with dotnet
+        run: dotnet nuget push nuget-packages/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
