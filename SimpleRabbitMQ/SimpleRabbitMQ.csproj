@@ -8,6 +8,7 @@
     <Description>A simple library to interact and manage RabbitMQ.</Description>
     <RepositoryUrl>https://github.com/fenixrhiulta/SimpleRabbitMQ</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <repository type="git" url="https://github.com/fenixrhiulta/SimpleRabbitMQ" />
   </PropertyGroup>
 
   <ItemGroup>
