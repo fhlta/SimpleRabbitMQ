@@ -1,5 +1,4 @@
-SimpleRabbitMQ - Simplifique o RabbitMQ
-========================================
+# SimpleRabbitMQ - Simplifique o RabbitMQ
 
 Biblioteca criada para simplificar a interação com o RabbitMQ.
 
@@ -9,7 +8,7 @@ SimpleRabbitMQ é uma [NuGet library](https://www.nuget.org/packages/SimpleRabbi
 
 ### Target
 
-Facilitar a comunicação com o RabbitMQ em APIs. Com ela é possível definir as configurações no AppSettings, como URI, Exchanges e Queues. Publique as mensagens utilizando a abstração "IPublisher" e consuma com o "IConsumer", definidos para cada DTO e com suas respectivas funcionalidades. 
+Facilitar a comunicação com o RabbitMQ em APIs. Com ela é possível definir as configurações no AppSettings, como URI, Exchanges e Queues. Publique as mensagens utilizando as interfaces "IPublisher" e "IConsumer", definidos para cada DTO e com suas respectivas funcionalidades.
 
 ### ISimpleRabbitMQ
 
@@ -31,7 +30,6 @@ SimpleRabbitMQ.CreateQueue(appSettings.SimpleRabbitMQSettings.OrderCreateQueue);
 
 ### IPublisher
 
-
 ```csharp
 
 public Publisher(ILogger logger, ISimpleRabbitMQ simpleRabbitMQ, QueueSettings queue)
@@ -46,10 +44,10 @@ public async Task<OrderCreateResponse> PostOrderServiceAsync(OrderCreateRequest 
     try
     {
         var response = await _publisherMQ.PublishAsync(orderDTO);
-        if (response == false) 
-        { 
-            Console.WriteLine("Failed to publish message"); 
-            
+        if (response == false)
+        {
+            Console.WriteLine("Failed to publish message");
+
             // when failed to publish message
 
             return null;
@@ -105,7 +103,7 @@ public override Task StartAsync(CancellationToken cancellationToken)
 {
   "SimpleRabbitMQSettings": {
     "Uri": "amqp://user:password@host:port/", # altere conforme o seu ambiente
-    
+
     # Exchange Setting
     "OrderExchange": {
       "Name": "order-ex",
@@ -121,6 +119,7 @@ public override Task StartAsync(CancellationToken cancellationToken)
   }
 }
 ```
+
 2 - Crie um SimpleRabbitMQSettingsCustom
 
 ```csharp
@@ -136,7 +135,7 @@ public class SimpleRabbitMQSettingsCustom : SimpleRabbitMQSettings
 ```csharp
 public class AppSettings
 {
-    public SimpleRabbitMQSettingsCustom SimpleRabbitMQSettings { get;set;} 
+    public SimpleRabbitMQSettingsCustom SimpleRabbitMQSettings { get;set;}
 }
 ```
 
@@ -191,4 +190,5 @@ Soon...
 - Stress Test
 
 ## Contribute
+
 [Fenix Rhiulta](https://github.com/fenixrhiulta/)

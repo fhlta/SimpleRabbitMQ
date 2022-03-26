@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata minClientVersion="2.12">
+    <id>SimpleRabbitMQ</id>
+    <title>SimpleRabbitMQ</title>
+    <version>$version$</version>
+    <authors>Fenix Rhiulta</authors>
+    <owners>Fenix Rhiulta</owners>
+    <license type="file">LICENSE.txt</license>
+    <projectUrl>https://github.com/fenixrhiulta/SimpleRabbitMQ</projectUrl>
+    <repository type="git" url="https://github.com/fenixrhiulta/SimpleRabbitMQ"/>
+    <iconUrl>https://github.com/fenixrhiulta/SimpleRabbitMQ/resources/images/icon/SimpleRabbitMQ_256.png</iconUrl>
+    <icon>icon.png</icon>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>SimpleRabbitMQ is library to interact and manage RabbitMQ communication.</summary>
+    <description>SimpleRabbitMQ is a NuGet library that you can add on your project and use the interfaces ISimpleRabbitMQ, IPublisher and IConsumer.</description>
+    <releaseNotes>This package includes the NUnit 3 framework assembly, which is referenced by your tests. You will need to install version 3 of the nunit3-console program or a third-party runner that supports NUnit 3 in order to execute tests. Runners intended for use with NUnit 2.x will not run NUnit 3 tests correctly.</releaseNotes>
+    <language>en-US</language>
+    <tags>RabbitMQ; SimpleRabbitMQ</tags>
+    <copyright>Copyright (c) Fenix Rhiulta and Contributors. MIT License.</copyright>
+    <!-- <dependencies>
+      <group targetFramework="net5.0" />
+      <group targetFramework="netstandard2.0">
+        <dependency id="NETStandard.Library" version="2.0.0" />
+      </group>
+    </dependencies> -->
+  </metadata>
+  <!-- <files>
+    <file src="LICENSE.txt" />
+    <file src="..\..\nuget\icon.png" />
+    <file src="bin/net45/nunit.framework.dll" target="lib\net45" />
+    <file src="bin/net45/nunit.framework.xml" target="lib\net45" />
+    <file src="bin/net45/nunit.framework.pdb" target="lib\net45" />
+    <file src="bin/netstandard2.0/nunit.framework.dll" target="lib\netstandard2.0" />
+    <file src="bin/netstandard2.0/nunit.framework.xml" target="lib\netstandard2.0" />
+    <file src="bin/netstandard2.0/nunit.framework.pdb" target="lib\netstandard2.0" />
+    <file src="..\..\nuget\framework\NUnit.props" target="build" />
+  </files> -->
+</package>
