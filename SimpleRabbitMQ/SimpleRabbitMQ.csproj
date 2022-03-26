@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageTags>RabbitMQ</PackageTags>
+    <Title>SimpleRabbitMQ</Title>
+    <Authors>Fenix Rhiulta</Authors>
+    <Description>
+      A simple library to interact and manage RabbitMQ.
+      Documentation: https://github.com/fenixrhiulta/SimpleRabbitMQ
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
