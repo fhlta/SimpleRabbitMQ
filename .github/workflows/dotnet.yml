@@ -45,8 +45,8 @@ jobs:
       # - name: Pack with dotnet
       #   run: dotnet pack SimpleRabbitMQ/SimpleRabbitMQ.csproj --output nuget-packages --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2 }}
 
-      - name: Pack with nuget.exe
       - uses: nuget/setup-nuget@v1
+      - name: Pack with nuget.exe
         run: nuget pack -OutputDirectory nuget-packages -Properties Configuration=Release -Version ${{ steps.gitversion.outputs.nuGetVersionV2 }}
 
       - name: Push with dotnet
