@@ -5,10 +5,9 @@
     <PackageTags>RabbitMQ</PackageTags>
     <Title>SimpleRabbitMQ</Title>
     <Authors>Fenix Rhiulta</Authors>
-    <Description>
-      A simple library to interact and manage RabbitMQ.
-      Documentation: https://github.com/fenixrhiulta/SimpleRabbitMQ
-    </Description>
+    <Description>A simple library to interact and manage RabbitMQ.</Description>
+    <RepositoryUrl>https://github.com/fenixrhiulta/SimpleRabbitMQ</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
