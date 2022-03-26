@@ -5,7 +5,7 @@ Biblioteca criada para simplificar a interação com o RabbitMQ.
 
 # Features
 
-SimpleRabbitMQ é uma [NuGet library](https://www.nuget.org/packages/SimpleRabbitMQ/1.0.0) que você pode adicionar ao seu projeto e utilizar as interfaces ISimpleRabbitMQ, IPublisher e IConsumer.
+SimpleRabbitMQ é uma [NuGet library](https://www.nuget.org/packages/SimpleRabbitMQ) que você pode adicionar ao seu projeto e utilizar as interfaces ISimpleRabbitMQ, IPublisher e IConsumer.
 
 ### Target
 
