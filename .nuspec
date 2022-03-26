@@ -12,7 +12,7 @@
     <iconUrl>https://github.com/fenixrhiulta/SimpleRabbitMQ/resources/images/icon/SimpleRabbitMQ_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>SimpleRabbitMQ is library to interact and manage RabbitMQ communication.</summary>
-    <description>SimpleRabbitMQ is a NuGet library that you can add on your project and use the interfaces ISimpleRabbitMQ, IPublisher and IConsumer.</description>
+    <description>SimpleRabbitMQ is a NuGet library that you can add to your project and use the interfaces ISimpleRabbitMQ, IPublisher and IConsumer.</description>
     <releaseNotes>This package includes the NUnit 3 framework assembly, which is referenced by your tests. You will need to install version 3 of the nunit3-console program or a third-party runner that supports NUnit 3 in order to execute tests. Runners intended for use with NUnit 2.x will not run NUnit 3 tests correctly.</releaseNotes>
     <language>en-US</language>
     <tags>RabbitMQ; SimpleRabbitMQ</tags>
